@@ -23,7 +23,7 @@ public class UserController {
   private UserService userService;
 
   @PostMapping
-  public ResponseEntity<User> createUser(@RequestBody UserDTO user) {
+  public ResponseEntity<User> createUser(@RequestBody UserDTO user) throws Exception {
 
     User newUser = this.userService.createUser(user);
 

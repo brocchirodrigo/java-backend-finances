@@ -1,7 +1,9 @@
 package com.finance.infra;
 
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,6 +28,24 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionDTO> threatGeneralException(Exception exception) {
     ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(), "500");
+    return ResponseEntity.internalServerError().body(exceptionDTO);
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ExceptionDTO> threatGeneralException(IllegalArgumentException exception) {
+    ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(), "500");
+    return ResponseEntity.internalServerError().body(exceptionDTO);
+  }
+
+  @ExceptionHandler(IllegalIdentifierException.class)
+  public ResponseEntity<ExceptionDTO> threatGeneralException(IllegalIdentifierException exception) {
+    ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(), "500");
+    return ResponseEntity.internalServerError().body(exceptionDTO);
+  }
+
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<ExceptionDTO> threatGeneralException(HttpMessageNotReadableException exception) {
+    ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMostSpecificCause().getMessage(), "500");
     return ResponseEntity.internalServerError().body(exceptionDTO);
   }
 

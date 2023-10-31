@@ -30,18 +30,23 @@ public class UserService {
   }
 
   public User findUserById(Long id) throws Exception {
-    return this.repository.findUserById(id).orElseThrow(() -> new Exception("Can`t find user."));
+    return this.repository.findUserById(id).orElseThrow(() -> new Exception("Cannot find user."));
   }
 
-  public User createUser(UserDTO data) {
+  public User createUser(UserDTO data) throws Exception {
     User newUser = new User();
     newUser.setNewUser(data);
-    this.saveUser(newUser);
 
+    this.saveUser(newUser);
     return newUser;
+
   }
 
-  public void saveUser(User user) {
+  public void saveUser(User user) throws Exception {
+    if (user.getUserType() != UserType.MERCHANT || user.getUserType() != UserType.COMMON) {
+      throw new Exception("Invalid User Type.");
+    }
+
     this.repository.save(user);
   }
 
