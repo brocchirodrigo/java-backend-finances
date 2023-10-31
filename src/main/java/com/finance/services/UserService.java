@@ -43,7 +43,7 @@ public class UserService {
   }
 
   public void saveUser(User user) throws Exception {
-    if (user.getUserType() != UserType.MERCHANT || user.getUserType() != UserType.COMMON) {
+    if (!(user.getUserType() == UserType.MERCHANT || user.getUserType() == UserType.COMMON)) {
       throw new Exception("Invalid User Type.");
     }
 
